@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Dribbble Modern UI Theme Extension - المساعد الذكي (جامعة العلوم والتقانة)
+   ========================================================================== 
+   الميزات المضافة:
+   1. Frosted Glassmorphism (زجاج ضبابي شفاف للأشرطة والبطاقات)
+   2. Multi-layered Ambient Shadows (ظلال ثلاثية الأبعاد متدرجة وعائمة)
+   3. AI Glow & Gradient Accents (لمسات ضوئية وتوهج للذكاء الاصطناعي)
+   4. Micro-Interactions & Pill Components (حركات تفاعلية وحواف بيضاوية دائرية)
+   ========================================================================== */
+
+/* --- 1. Enhanced Variables & Tokens --- */
+:root {
+  --dribbble-glass-bg: rgba(255, 255, 255, 0.75);
+  --dribbble-glass-border: rgba(255, 255, 255, 0.6);
+  --dribbble-blur: saturate(180%) blur(16px);
+  --dribbble-shadow-ambient: 0 20px 40px -15px rgba(15, 27, 61, 0.08), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+  --dribbble-shadow-hover: 0 26px 50px -12px rgba(15, 27, 61, 0.16);
+  --dribbble-ai-glow: 0 0 20px rgba(201, 162, 74, 0.25);
+  --dribbble-gradient-gold: linear-gradient(135deg, #c9a24a 0%, #dab968 100%);
+  --dribbble-gradient-teal: linear-gradient(135deg, #1c4d55 0%, #256671 100%);
+  --dribbble-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark-demo {
+  --dribbble-glass-bg: rgba(18, 31, 61, 0.78);
+  --dribbble-glass-border: rgba(255, 255, 255, 0.12);
+  --dribbble-shadow-ambient: 0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
+  --dribbble-shadow-hover: 0 26px 55px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* --- 2. Topbar Header (Frosted Glass & Pill Design) --- */
+header.topbar,
+body.welcome-page header {
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  -webkit-backdrop-filter: var(--dribbble-blur) !important;
+  border-bottom: 1px solid var(--dribbble-glass-border) !important;
+  box-shadow: 0 8px 32px rgba(15, 27, 61, 0.04) !important;
+  transition: background 0.3s ease, border-color 0.3s ease !important;
+}
+
+.topbar .avatar {
+  border: 2px solid var(--gold-500) !important;
+  box-shadow: var(--dribbble-ai-glow) !important;
+  transition: transform 0.25s var(--dribbble-ease) !important;
+}
+
+.topbar .avatar:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.nav-tabs a {
+  border-radius: var(--radius-full) !important;
+  padding: 6px 18px !important;
+  transition: all 0.25s var(--dribbble-ease) !important;
+}
+
+.nav-tabs a.active {
+  background: var(--navy-900) !important;
+  color: var(--gold-500) !important;
+  box-shadow: 0 4px 15px rgba(15, 27, 61, 0.2) !important;
+}
+
+body.dark-demo .nav-tabs a.active {
+  background: var(--gold-500) !important;
+  color: var(--navy-900) !important;
+}
+
+/* --- 3. Chat Layout & Sidebar (Dribbble Glass Sidebar) --- */
+aside.sidebar {
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  -webkit-backdrop-filter: var(--dribbble-blur) !important;
+  border-left: 1px solid var(--dribbble-glass-border) !important;
+  box-shadow: var(--dribbble-shadow-ambient) !important;
+}
+
+.new-chat-btn {
+  background: var(--dribbble-gradient-teal) !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 8px 20px rgba(28, 77, 85, 0.25) !important;
+  transition: all 0.25s var(--dribbble-ease) !important;
+}
+
+.new-chat-btn:hover {
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 12px 28px rgba(28, 77, 85, 0.35) !important;
+}
+
+.history-item {
+  border-radius: var(--radius-md) !important;
+  transition: all 0.2s var(--dribbble-ease) !important;
+  border: 1px solid transparent;
+}
+
+.history-item:hover {
+  background: rgba(201, 162, 74, 0.08) !important;
+  border-color: rgba(201, 162, 74, 0.2) !important;
+  transform: translateX(-3px);
+}
+
+.history-item.active {
+  background: var(--panel) !important;
+  border-color: var(--gold-500) !important;
+  box-shadow: 0 6px 18px rgba(15, 27, 61, 0.08) !important;
+}
+
+/* --- 4. Chat Messages & Bot AI Glow --- */
+.message-group.bot .msg-bubble {
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  -webkit-backdrop-filter: var(--dribbble-blur) !important;
+  border: 1px solid var(--dribbble-glass-border) !important;
+  border-right: 3.5px solid var(--gold-500) !important;
+  box-shadow: var(--dribbble-shadow-ambient) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.message-group.user .msg-bubble {
+  background: var(--dribbble-gradient-teal) !important;
+  box-shadow: 0 10px 25px rgba(28, 77, 85, 0.22) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.msg-icon {
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 0 16px rgba(201, 162, 74, 0.3) !important;
+  animation: dribbble-pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes dribbble-pulse {
+  0% { box-shadow: 0 0 12px rgba(201, 162, 74, 0.2); transform: scale(1); }
+  100% { box-shadow: 0 0 22px rgba(201, 162, 74, 0.45); transform: scale(1.05); }
+}
+
+/* --- 5. Suggestion Chips (Pill & Micro-Bounce) --- */
+.chip-btn {
+  border-radius: var(--radius-full) !important;
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  border: 1px solid var(--dribbble-glass-border) !important;
+  box-shadow: 0 6px 16px rgba(15, 27, 61, 0.05) !important;
+  padding: 8px 18px !important;
+  transition: all 0.25s var(--dribbble-ease) !important;
+}
+
+.chip-btn:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  border-color: var(--gold-500) !important;
+  box-shadow: 0 12px 25px -4px rgba(201, 162, 74, 0.25) !important;
+  color: var(--navy-900) !important;
+}
+
+/* --- 6. Floating Message Composer Bar --- */
+.composer {
+  background: transparent !important;
+}
+
+.composer-inner {
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  -webkit-backdrop-filter: var(--dribbble-blur) !important;
+  border: 1.5px solid var(--dribbble-glass-border) !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 16px 40px -10px rgba(15, 27, 61, 0.12),
+              0 0 1px 1px rgba(255, 255, 255, 0.7) inset !important;
+  padding: 6px 14px !important;
+  transition: all 0.3s var(--dribbble-ease) !important;
+}
+
+.composer-inner:focus-within {
+  border-color: var(--gold-500) !important;
+  box-shadow: 0 20px 45px -8px rgba(201, 162, 74, 0.3),
+              0 0 0 3px rgba(201, 162, 74, 0.12) !important;
+}
+
+.send-btn {
+  background: var(--dribbble-gradient-gold) !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 6px 18px rgba(201, 162, 74, 0.35) !important;
+  transition: all 0.25s var(--dribbble-ease) !important;
+}
+
+.send-btn:hover {
+  transform: scale(1.08) rotate(-5deg) !important;
+  box-shadow: 0 10px 24px rgba(201, 162, 74, 0.5) !important;
+}
+
+/* --- 7. Welcome & Auth Cards Enhancements --- */
+.welcome-page main,
+.auth-card,
+.settings-card {
+  background: var(--dribbble-glass-bg) !important;
+  backdrop-filter: var(--dribbble-blur) !important;
+  -webkit-backdrop-filter: var(--dribbble-blur) !important;
+  border: 1px solid var(--dribbble-glass-border) !important;
+  box-shadow: var(--dribbble-shadow-ambient) !important;
+  border-radius: var(--radius-xl) !important;
+  transition: box-shadow 0.3s var(--dribbble-ease), transform 0.3s var(--dribbble-ease) !important;
+}
+
+.welcome-page main:hover,
+.auth-card:hover {
+  box-shadow: var(--dribbble-shadow-hover) !important;
+}
+
+.login-btn,
+.btn-primary {
+  border-radius: var(--radius-full) !important;
+  background: var(--dribbble-gradient-teal) !important;
+  box-shadow: 0 10px 25px rgba(28, 77, 85, 0.28) !important;
+  transition: all 0.25s var(--dribbble-ease) !important;
+}
+
+.login-btn:hover,
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 16px 32px rgba(28, 77, 85, 0.38) !important;
+}
+
+.theme-toggle {
+  backdrop-filter: var(--dribbble-blur) !important;
+  box-shadow: 0 10px 30px rgba(15, 27, 61, 0.15) !important;
+  transition: transform 0.3s var(--dribbble-ease) !important;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.12) rotate(15deg) !important;
+}
