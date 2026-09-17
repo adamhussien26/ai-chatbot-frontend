@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المساعد الذكي — جامعة العلوم والتقانة</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/pages/chat.css">
+
+  <!-- JS Scripts -->
+  <script src="js/main.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/pages/chat.js" defer></script>
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<header class="topbar">
+  <div class="topbar-side">
+    <button type="button" class="mobile-sidebar-toggle" id="sidebarToggle" title="أرشيف المحادثات" aria-label="أرشيف المحادثات">
+      <svg viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <img class="avatar" src="https://i.pravatar.cc/80?img=12" alt="صورة المستخدم">
+  </div>
+  <nav class="nav-tabs" aria-label="Main Navigation">
+    <a href="06-chat.html" class="active">المساعد الذكي</a>
+    <a href="07-settings.html">الملف الشخصي</a>
+  </nav>
+  <div class="uni-brand">
+    <span>جامعة العلوم والتقانة</span>
+    <div class="uni-logo">
+      <img src="assets/logo.png" alt="شعار الجامعة">
+    </div>
+  </div>
+</header>
+
+<!-- Backdrop Overlay for Mobile Sidebar -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<!-- Main App Layout (RTL: Sidebar on Right, Chat on Left) -->
+<div class="layout">
+
+  <!-- Sidebar Column (Right Side in RTL) -->
+  <aside class="sidebar" id="chatSidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">المساعد الذكي</div>
+      <button type="button" class="close-sidebar-btn" id="closeSidebarBtn" aria-label="إغلاق القائمة">✕</button>
+    </div>
+
+    <button type="button" class="new-chat-btn" id="newChatBtn">
+      <span>محادثة جديدة</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="history-section">
+      <div class="sidebar-title" style="font-size:13.5px;">المحادثات السابقة</div>
+
+      <div class="history-scroll-area">
+        <div class="history-group-label">اليوم</div>
+        <div class="history-list">
+          <div class="history-item active">
+            <span class="history-dot"></span>
+            <div class="history-text">
+              <div class="h-title">التسجيل في مقررات الفصل</div>
+              <div class="h-snippet">كيف أضيف مقرر بعد إغلاق البوابة؟</div>
+            </div>
+            <div class="history-actions">
+              <button type="button" title="إعادة تسمية" aria-label="إعادة تسمية">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M4 20l1-4L16 5l3 3L8 19l-4 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="del" title="حذف" aria-label="حذف">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="history-group-label">أمس</div>
+        <div class="history-list">
+          <div class="history-item">
+            <span class="history-dot"></span>
+            <div class="history-text">
+              <div class="h-title">استفسار عن الرسوم الدراسية</div>
+              <div class="h-snippet">أهلاً بك! كيف يمكنني مساعدتك؟</div>
+            </div>
+            <div class="history-actions">
+              <button type="button" title="إعادة تسمية" aria-label="إعادة تسمية">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M4 20l1-4L16 5l3 3L8 19l-4 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="del" title="حذف" aria-label="حذف">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="history-group-label">هذا الأسبوع</div>
+        <div class="history-list">
+          <div class="history-item">
+            <span class="history-dot"></span>
+            <div class="history-text">
+              <div class="h-title">جدول الامتحانات النهائية</div>
+              <div class="h-snippet">أريد جدول امتحانات الفصل الحالي</div>
+            </div>
+            <div class="history-actions">
+              <button type="button" title="إعادة تسمية" aria-label="إعادة تسمية">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M4 20l1-4L16 5l3 3L8 19l-4 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="del" title="حذف" aria-label="حذف">
+                <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
+                  <path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="side-links">
+      <div class="side-link primary">
+        <span class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          <span>المساعد الذكي</span>
+        </span>
+      </div>
+      <a href="07-settings.html" class="side-link">
+        <span class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/>
+          </svg>
+          <span>الملف الشخصي</span>
+        </span>
+      </a>
+      <a href="01-welcome.html" class="side-link logout">
+        <span class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>تسجيل الخروج</span>
+        </span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Chat Column (Left Side in RTL) -->
+  <main class="chat-col">
+
+    <!-- Scrollable Messages Area -->
+    <div class="messages-container" id="messagesContainer">
+      
+      <!-- Bot Greeting Message -->
+      <div class="message-group bot">
+        <div class="msg-row">
+          <div class="msg-bubble">
+            أهلاً بك في البوابة الذكية لجامعة العلوم والتقانة! 👋<br>
+            أنا مساعدك الأكاديمي، كيف يمكنني مساعدتك اليوم؟ يمكنك اختيار إحدى الأفكار السريعة أو كتابة سؤالك مباشرةً.
+          </div>
+          <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+        </div>
+        <div class="msg-time">10:38 صباحاً</div>
+      </div>
+
+    </div>
+
+    <!-- Quick Suggestion Chips -->
+    <div class="suggestion-chips" id="suggestionChips">
+      <button type="button" class="chip-btn" data-query="متى موعد التسجيل وإضافة المقررات الفصلية؟">
+        <span>🎓 التسجيل والمقررات</span>
+      </button>
+      <button type="button" class="chip-btn" data-query="ما هي طرق ودفع الرسوم الدراسية المتاحة؟">
+        <span>💳 الشؤون المالية والرسوم</span>
+      </button>
+      <button type="button" class="chip-btn" data-query="أريد جدول امتحانات الفصل الدراسي الحالي">
+        <span>📅 جدول الامتحانات</span>
+      </button>
+      <button type="button" class="chip-btn" data-query="كيفية استخراج إفادة التخرج والشهادات الجامعية؟">
+        <span>📄 استخراج الشهادات</span>
+      </button>
+    </div>
+
+    <!-- Animated Typing Indicator (Hidden by default) -->
+    <div class="typing-indicator hidden" id="typingIndicator">
+      <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+      <div class="typing-bubble">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Message Composer Bar -->
+    <div class="composer">
+      <div class="composer-inner">
+        <button type="button" class="send-btn" id="sendBtn" title="إرسال" aria-label="إرسال">
+          <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+            <path d="M4 12L20 4L14 20L11 13L4 12Z" stroke="white" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <input type="text" id="chatInput" placeholder="اكتب استفسارك هنا..." aria-label="اكتب استفسارك هنا">
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

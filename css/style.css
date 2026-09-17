@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Global Style System - المساعد الذكي (جامعة العلوم والتقانة)
+   ========================================================================== */
+
+/* --- 1. CSS Custom Properties / Design Tokens --- */
+:root {
+  /* Color Palette - Palette الرئيسية */
+  --navy-900: #0f1b3d;
+  --navy-800: #122a56;
+  --navy-700: #1b3a72;
+  --navy-600: #274a8a;
+  --navy-deep: #0a1330;
+  --navy-panel: #101d40;
+
+  /* Gold Accents - لمسات الذهبي */
+  --gold-500: #c9a24a;
+  --gold-400: #dab968;
+  --gold-100: #f6ecd3;
+
+  /* Teal Accents - لمسات التيل (Login / Alt) */
+  --teal-dark: #16333a;
+  --teal-mid: #1b4249;
+  --teal-btn: #1c4d55;
+  --teal-btn-hover: #123a40;
+
+  /* Neutral & Base Backgrounds */
+  --bg: #f4f5f8;
+  --panel: #ffffff;
+  --white: #ffffff;
+  --border: #e6e8ee;
+  --line: #e6e9f0;
+
+  /* Typography Colors */
+  --text-dark: #14203f;
+  --text: #1b2333;
+  --text-muted: #6b7280;
+  --text-faint: #98a0ae;
+
+  /* Feedback Colors */
+  --danger: #e05a5a;
+  --danger-bg: #fdeceb;
+  --success: #2e9e6b;
+  --success-bg: #e9f8f1;
+  --warning: #d99a2b;
+
+  /* Radius Tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-full: 999px;
+
+  /* Shadow Tokens */
+  --shadow-sm: 0 4px 12px rgba(15, 27, 61, 0.06);
+  --shadow-md: 0 10px 26px -14px rgba(15, 27, 61, 0.15);
+  --shadow-lg: 0 18px 40px -12px rgba(15, 27, 61, 0.18);
+  --shadow-card: 0 24px 50px -18px rgba(15, 27, 61, 0.2);
+
+  /* Transitions */
+  --transition-fast: all 0.15s ease;
+  --transition-normal: all 0.2s ease;
+  --transition-slow: all 0.3s ease;
+}
+
+/* Dark Theme Demo Override */
+body.dark-demo {
+  --bg: #0b1329;
+  --panel: #121f3d;
+  --white: #121f3d;
+  --border: #23345a;
+  --line: #23345a;
+  --text-dark: #e8ecf5;
+  --text: #e8ecf5;
+  --text-muted: #9ba8c0;
+  --text-faint: #6c7c99;
+}
+
+/* --- 2. CSS Reset & Box Sizing --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Tajawal', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  line-height: 1.6;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Support LTR when dir="ltr" */
+html[dir="ltr"] body {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Link & Image Defaults */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, svg {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+/* Focus States for Accessibility */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+/* --- 3. Global Utility Classes --- */
+.hidden { display: none !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+.text-left { text-align: left !important; }
+
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-column { display: flex; flex-direction: column; }
+
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.gap-lg { gap: 24px; }

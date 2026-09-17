@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب - جامعة العلوم والتقانة</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/pages/signup.css">
+
+  <!-- JS Scripts -->
+  <script src="js/main.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/pages/signup.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- LEFT: Form Panel -->
+  <section class="form-panel">
+    <div class="form-inner">
+      <a href="03-login.html" class="back-link">
+        <span>العودة لتسجيل الدخول</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+
+      <div class="brand-logo">
+        <img src="assets/logo.png" alt="شعار الجامعة">
+      </div>
+
+      <h1>إنشاء حساب</h1>
+      <p class="subtitle">املأ بياناتك للانضمام إلى البوابة</p>
+
+      <form id="signupForm" novalidate>
+        <div class="row-2">
+          <div class="field" id="idField">
+            <label for="uniId">الرقم الجامعي</label>
+            <div class="input-wrap">
+              <input type="text" id="uniId" placeholder="20241056" autocomplete="username">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                  <line x1="7" y1="9" x2="17" y2="9"></line>
+                  <line x1="7" y1="13" x2="13" y2="13"></line>
+                </svg>
+              </span>
+            </div>
+            <div class="error">أدخل الرقم الجامعي.</div>
+          </div>
+
+          <div class="field" id="nameField">
+            <label for="fullName">الاسم الكامل</label>
+            <div class="input-wrap">
+              <input type="text" id="fullName" placeholder="الاسم الثلاثي" autocomplete="name">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+            </div>
+            <div class="error">أدخل اسمك الكامل.</div>
+          </div>
+        </div>
+
+        <div class="field" id="emailField">
+          <label for="email">البريد الإلكتروني</label>
+          <div class="input-wrap">
+            <input type="email" id="email" placeholder="example@ust.edu" autocomplete="email">
+            <span class="field-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M22 6l-10 7L2 6"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="error">أدخل بريدًا إلكترونيًا جامعيًا صحيحًا.</div>
+        </div>
+
+        <div class="row-2">
+          <div class="field" id="confirmField">
+            <label for="confirm">تأكيد كلمة المرور</label>
+            <div class="input-wrap">
+              <input type="password" id="confirm" placeholder="أعد كتابة كلمة المرور" autocomplete="new-password">
+              <span class="toggle-pass" data-target="confirm" role="button" aria-label="تبديل إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </span>
+            </div>
+            <div class="error">كلمتا المرور غير متطابقتين.</div>
+          </div>
+
+          <div class="field" id="passField">
+            <label for="password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input type="password" id="password" placeholder="8 أحرف على الأقل" autocomplete="new-password">
+              <span class="toggle-pass" data-target="password" role="button" aria-label="تبديل إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </span>
+            </div>
+            <div class="error">8 أحرف على الأقل.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" y1="8" x2="20" y2="14"></line>
+            <line x1="23" y1="11" x2="17" y2="11"></line>
+          </svg>
+          <span id="submitText">إنشاء الحساب</span>
+        </button>
+      </form>
+
+      <div class="divider">أو</div>
+
+      <button type="button" class="btn-google" id="googleBtn">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.95v2.33A9 9 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.95A9 9 0 0 0 0 9c0 1.45.35 2.83.95 4.03l3-2.33z"/>
+          <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .95 4.97l3 2.33C4.66 5.17 6.65 3.58 9 3.58z"/>
+        </svg>
+        <span>التسجيل باستخدام Google</span>
+      </button>
+
+      <p class="signin-text">لديك حساب؟ <a href="03-login.html">سجل دخولك</a></p>
+    </div>
+  </section>
+
+  <!-- RIGHT: Visual Panel -->
+  <section class="visual-panel">
+    <div class="visual-header">
+      <div class="uni-logo">
+        <img src="assets/logo.png" alt="شعار الجامعة">
+      </div>
+      <div class="uni-name">
+        <div class="ar">جامعة العلوم والتقانة</div>
+        <div class="en">University of Science &amp; Technology</div>
+      </div>
+    </div>
+
+    <div class="photo-frame">
+      <img src="assets/screen.png" alt="صورة الحرم الجامعي">
+    </div>
+
+    <h2>انضم إلى البوابة<br>الذكية اليوم</h2>
+    <p class="desc">أنشئ حسابك للوصول إلى جميع الخدمات الجامعية — الجدول، النتائج، التسجيل، الرسوم والمزيد.</p>
+
+    <div class="badges">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>دعم 24/7</span>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>بيانات آمنة</span>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span>تسجيل سريع</span>
+      </div>
+    </div>
+
+    <div class="theme-toggle" id="themeToggle" role="button" aria-label="تبديل المظهر" tabindex="0">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

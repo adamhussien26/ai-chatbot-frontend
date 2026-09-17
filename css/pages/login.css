@@ -1,0 +1,187 @@
+/* ==========================================================================
+   Page Specific Style: 03-login.html (صفحة تسجيل الدخول)
+   ========================================================================== */
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 100vh;
+}
+
+.card {
+  display: flex;
+  width: 100%;
+  max-width: 1050px;
+  min-height: 620px;
+  background: var(--white);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(10, 30, 35, 0.35);
+}
+
+/* Left Visual Panel */
+.panel {
+  position: relative;
+  flex: 1 1 50%;
+  background:
+    linear-gradient(160deg, rgba(15, 32, 67, 0.82) 0%, rgba(10, 22, 48, 0.90) 100%),
+    url('../../assets/conny-schneider-pREq0ns_p_E-unsplash.jpg') no-repeat center center / cover;
+  border-radius: 24px;
+  margin: 10px;
+  overflow: hidden;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 40px;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 60% 35%, rgba(66, 133, 244, 0.25), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 14px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.logo {
+  position: relative;
+  z-index: 2;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #ffffff;
+  border: 1.5px solid var(--gold-400);
+  padding: 2px;
+}
+
+.bird {
+  position: absolute;
+  right: 14%;
+  top: 46%;
+  width: 90px;
+  height: auto;
+  opacity: 0.92;
+  z-index: 2;
+}
+
+html[dir="ltr"] .bird {
+  right: auto;
+  left: 14%;
+  transform: scaleX(-1);
+}
+
+.panel-text {
+  position: relative;
+  z-index: 2;
+}
+
+.panel-heading {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+  line-height: 1.12;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.panel-desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 360px;
+  margin-bottom: 14px;
+}
+
+.panel-tagline {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Right Form Panel */
+.form-side {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 56px;
+}
+
+.form-wrap {
+  width: 100%;
+  max-width: 340px;
+}
+
+.form-wrap h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.form-wrap .subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  font-size: 13.5px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dark);
+  cursor: pointer;
+  user-select: none;
+}
+
+.remember input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--teal-btn);
+  cursor: pointer;
+}
+
+.forgot {
+  color: var(--teal-btn);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.forgot:hover { text-decoration: underline; }
+
+.signup-text {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.signup-text a {
+  color: var(--teal-btn);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.signup-text a:hover { text-decoration: underline; }

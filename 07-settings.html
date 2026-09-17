@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الإعدادات — جامعة العلوم والتقانة</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/pages/settings.css">
+
+  <!-- JS Scripts -->
+  <script src="js/main.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/pages/settings.js" defer></script>
+</head>
+<body>
+
+<!-- Sticky Top Bar -->
+<header class="topbar">
+  <div class="topbar-side">
+    <img class="avatar" src="https://i.pravatar.cc/80?img=12" alt="الصورة الشخصية">
+  </div>
+  <nav class="nav-tabs" aria-label="Main Navigation">
+    <a href="07-settings.html" class="active">الإعدادات</a>
+    <a href="06-chat.html">المساعد الذكي</a>
+  </nav>
+  <div class="uni-brand">
+    <span>جامعة العلوم والتقانة</span>
+    <div class="uni-logo">
+      <img src="assets/logo.png" alt="شعار الجامعة">
+    </div>
+  </div>
+</header>
+
+<!-- Main Page Content -->
+<main class="page">
+
+  <div class="page-title">الإعدادات</div>
+
+  <!-- Profile Card -->
+  <section class="card">
+    <div class="profile-row">
+      <div class="profile-meta">
+        <div class="name">طالب تجريبي</div>
+        <div class="sub-row">
+          <span>202022
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span>student@ust.edu
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+        </div>
+        <div class="remove-photo" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>إزالة الصورة</span>
+        </div>
+      </div>
+      <div class="profile-photo-wrap">
+        <img class="profile-photo" src="https://picsum.photos/seed/uststudent/200/200" alt="الصورة الشخصية">
+        <div class="photo-edit-btn" role="button" aria-label="تعديل الصورة الشخصية" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4V7z" stroke="white" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="white" stroke-width="1.7"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appearance Settings Card -->
+  <section class="card">
+    <div class="card-header">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22a10 10 0 1 1 0-20 7 7 0 0 1 0 14 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>
+        <span>المظهر</span>
+      </h3>
+    </div>
+
+    <div class="setting-row">
+      <label class="switch" aria-label="الوضع الداكن">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+      <div class="setting-text">
+        <div class="t">الوضع الداكن</div>
+        <div class="d">تقليل إجهاد العين في الإضاءة المنخفضة</div>
+      </div>
+      <div class="setting-icon">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Security Card -->
+  <section class="card">
+    <div class="card-header">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>كلمة المرور والأمان</span>
+      </h3>
+    </div>
+
+    <form class="field-grid">
+      <div class="field full">
+        <label for="currentPassword">كلمة المرور الحالية</label>
+        <input type="password" id="currentPassword" value="••••••••" autocomplete="current-password">
+      </div>
+      <div class="field">
+        <label for="newPassword">كلمة مرور جديدة</label>
+        <input type="password" id="newPassword" value="••••••••" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="confirmNewPassword">تأكيد كلمة المرور</label>
+        <input type="password" id="confirmNewPassword" value="••••••••" autocomplete="new-password">
+      </div>
+    </form>
+
+    <div class="card-footer">
+      <button type="button" class="primary-btn">
+        <span>تغيير كلمة المرور</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2" stroke="white" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="white" stroke-width="1.7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Brand Footer -->
+  <footer class="brand-footer">
+    <img src="assets/logo.png" alt="شعار الجامعة">
+    <div class="line1">المساعد الذكي للحرم الجامعي</div>
+    <div class="line2">جامعة العلوم والتقانة © 2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
