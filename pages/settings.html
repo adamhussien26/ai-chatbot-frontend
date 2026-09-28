@@ -3,49 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الإعدادات — جامعة العلوم والتقانة</title>
+  <title>الملف الشخصي — جامعة العلوم والتقانة</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/pages/settings.css">
-  <!-- Dribbble Theme (Remove or comment this line to revert to original baseline) -->
-  <link rel="stylesheet" href="css/dribbble-theme.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
 
-  <!-- JS Scripts -->
-  <script src="js/main.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/pages/settings.js" defer></script>
+  <!-- JS -->
+  <script src="../js/main.js" defer></script>
 </head>
 <body>
 
-<!-- Sticky Top Bar -->
-<header class="topbar">
-  <div class="topbar-side">
-    <img class="avatar" src="https://i.pravatar.cc/80?img=12" alt="الصورة الشخصية">
-  </div>
-  <nav class="nav-tabs" aria-label="Main Navigation">
-    <a href="07-settings.html" class="active">الإعدادات</a>
-    <a href="06-chat.html">المساعد الذكي</a>
-  </nav>
-  <div class="uni-brand">
-    <span>جامعة العلوم والتقانة</span>
-    <div class="uni-logo">
-      <img src="assets/logo.png" alt="شعار الجامعة">
-    </div>
-  </div>
-</header>
+<!-- Sticky Top Bar (يُرسم تلقائياً بواسطة js/main.js) -->
+<header class="topbar"></header>
 
 <!-- Main Page Content -->
 <main class="page">
 
-  <div class="page-title">الإعدادات</div>
+  <div class="page-title">الملف الشخصي</div>
 
   <!-- Profile Card -->
   <section class="card">
@@ -72,31 +51,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Appearance Settings Card -->
-  <section class="card">
-    <div class="card-header">
-      <h3>
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22a10 10 0 1 1 0-20 7 7 0 0 1 0 14 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>
-        <span>المظهر</span>
-      </h3>
-    </div>
-
-    <div class="setting-row">
-      <label class="switch" aria-label="الوضع الداكن">
-        <input type="checkbox" id="darkModeToggle">
-        <span class="slider"></span>
-      </label>
-      <div class="setting-text">
-        <div class="t">الوضع الداكن</div>
-        <div class="d">تقليل إجهاد العين في الإضاءة المنخفضة</div>
-      </div>
-      <div class="setting-icon">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      </div>
-    </div>
-
   </section>
 
   <!-- Security Card -->
@@ -133,7 +87,7 @@
 
   <!-- Brand Footer -->
   <footer class="brand-footer">
-    <img src="assets/logo.png" alt="شعار الجامعة">
+    <img src="../assets/images/logo.png" alt="شعار الجامعة">
     <div class="line1">المساعد الذكي للحرم الجامعي</div>
     <div class="line2">جامعة العلوم والتقانة © 2026</div>
   </footer>

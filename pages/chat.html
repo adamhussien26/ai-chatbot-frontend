@@ -8,44 +8,19 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/pages/chat.css">
-  <!-- Dribbble Theme (Remove or comment this line to revert to original baseline) -->
-  <link rel="stylesheet" href="css/dribbble-theme.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
 
-  <!-- JS Scripts -->
-  <script src="js/main.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/pages/chat.js" defer></script>
+  <!-- JS (main.js مشترك + chat.js خاص بصفحة المحادثة) -->
+  <script src="../js/main.js" defer></script>
+  <script src="../js/chat.js" defer></script>
 </head>
 <body>
 
-<!-- Top Navigation Bar -->
-<header class="topbar">
-  <div class="topbar-side">
-    <button type="button" class="mobile-sidebar-toggle" id="sidebarToggle" title="أرشيف المحادثات" aria-label="أرشيف المحادثات">
-      <svg viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true">
-        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-    <img class="avatar" src="https://i.pravatar.cc/80?img=12" alt="صورة المستخدم">
-  </div>
-  <nav class="nav-tabs" aria-label="Main Navigation">
-    <a href="06-chat.html" class="active">المساعد الذكي</a>
-    <a href="07-settings.html">الملف الشخصي</a>
-  </nav>
-  <div class="uni-brand">
-    <span>جامعة العلوم والتقانة</span>
-    <div class="uni-logo">
-      <img src="assets/logo.png" alt="شعار الجامعة">
-    </div>
-  </div>
-</header>
+<!-- Top Navigation Bar (يُرسم تلقائياً بواسطة js/main.js) -->
+<header class="topbar"></header>
 
 <!-- Backdrop Overlay for Mobile Sidebar -->
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
@@ -68,7 +43,7 @@
     </button>
 
     <div class="history-section">
-      <div class="sidebar-title" style="font-size:13.5px;">المحادثات السابقة</div>
+      <div class="sidebar-subtitle">المحادثات السابقة</div>
 
       <div class="history-scroll-area">
         <div class="history-group-label">اليوم</div>
@@ -152,7 +127,7 @@
           <span>المساعد الذكي</span>
         </span>
       </div>
-      <a href="07-settings.html" class="side-link">
+      <a href="settings.html" class="side-link">
         <span class="lbl">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
@@ -161,7 +136,7 @@
           <span>الملف الشخصي</span>
         </span>
       </a>
-      <a href="01-welcome.html" class="side-link logout">
+      <a href="welcome.html" class="side-link logout">
         <span class="lbl">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -178,7 +153,7 @@
 
     <!-- Scrollable Messages Area -->
     <div class="messages-container" id="messagesContainer">
-      
+
       <!-- Bot Greeting Message -->
       <div class="message-group bot">
         <div class="msg-row">
@@ -186,7 +161,7 @@
             أهلاً بك في البوابة الذكية لجامعة العلوم والتقانة! 👋<br>
             أنا مساعدك الأكاديمي، كيف يمكنني مساعدتك اليوم؟ يمكنك اختيار إحدى الأفكار السريعة أو كتابة سؤالك مباشرةً.
           </div>
-          <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+          <img class="msg-icon" src="../assets/images/logo.png" alt="المساعد الذكي">
         </div>
         <div class="msg-time">10:38 صباحاً</div>
       </div>
@@ -198,12 +173,7 @@
       <button type="button" class="chip-btn" data-query="متى موعد التسجيل وإضافة المقررات الفصلية؟">
         <span>🎓 التسجيل والمقررات</span>
       </button>
-      <button type="button" class="chip-btn" data-query="ما هي طرق ودفع الرسوم الدراسية المتاحة؟">
-        <span>💳 الشؤون المالية والرسوم</span>
-      </button>
-      <button type="button" class="chip-btn" data-query="أريد جدول امتحانات الفصل الدراسي الحالي">
-        <span>📅 جدول الامتحانات</span>
-      </button>
+
       <button type="button" class="chip-btn" data-query="كيفية استخراج إفادة التخرج والشهادات الجامعية؟">
         <span>📄 استخراج الشهادات</span>
       </button>
@@ -211,7 +181,7 @@
 
     <!-- Animated Typing Indicator (Hidden by default) -->
     <div class="typing-indicator hidden" id="typingIndicator">
-      <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+      <img class="msg-icon" src="../assets/images/logo.png" alt="المساعد الذكي">
       <div class="typing-bubble">
         <span class="dot"></span>
         <span class="dot"></span>

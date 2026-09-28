@@ -1,15 +1,14 @@
 /**
  * ==========================================================================
- * Page Specific Logic: 06-chat.html (صفحة المحادثة والذكاء الاصطناعي)
- * Handles interactive message sending, typing indicator simulation,
- * suggestion chips, search filtering, history items, and mobile drawer.
+ * chat.js — منطق صفحة المحادثة فقط (06 → pages/chat.html)
+ * المحرك التفاعلي: إرسال الرسائل، الردود الذكية، اقتراحات سريعة،
+ * إدارة أرشيف المحادثات، وقائمة الجانب على الجوال.
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initChatComposer();
   initSuggestionChips();
-  initHistorySearch();
   initHistoryActions();
   initMobileSidebarDrawer();
   checkURLQueryParam();
@@ -100,10 +99,10 @@ function appendUserMessage(container, text, timeStr) {
   const group = document.createElement('div');
   group.className = 'message-group user';
   group.innerHTML = `
-    <div class="msg-row" style="flex-direction: row-reverse;">
+    <div class="msg-row">
       <div class="msg-bubble msg-bubble--user">${escapeHTML(text)}</div>
     </div>
-    <div class="msg-time" style="margin-right: 0; margin-left: 0; text-align: left;">${timeStr}</div>
+    <div class="msg-time">${timeStr}</div>
   `;
   container.appendChild(group);
 }
@@ -117,7 +116,7 @@ function appendBotMessage(container, text, timeStr) {
   group.innerHTML = `
     <div class="msg-row">
       <div class="msg-bubble">${text}</div>
-      <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+      <img class="msg-icon" src="../assets/images/logo.png" alt="المساعد الذكي">
     </div>
     <div class="msg-time">${timeStr}</div>
   `;
@@ -144,30 +143,6 @@ function initSuggestionChips() {
       const query = chip.dataset.query;
       if (query && window.sendAssistantQuery) {
         window.sendAssistantQuery(query);
-      }
-    });
-  });
-}
-
-/**
- * Filters the history items based on search input.
- */
-function initHistorySearch() {
-  const searchInput = document.getElementById('historySearchInput');
-  if (!searchInput) return;
-
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    const items = document.querySelectorAll('.history-item');
-
-    items.forEach((item) => {
-      const title = item.querySelector('.h-title')?.textContent.toLowerCase() || '';
-      const snippet = item.querySelector('.h-snippet')?.textContent.toLowerCase() || '';
-
-      if (title.includes(query) || snippet.includes(query)) {
-        item.style.display = 'flex';
-      } else {
-        item.style.display = 'none';
       }
     });
   });
@@ -222,7 +197,7 @@ function initHistoryActions() {
               <div class="msg-bubble">
                 أهلاً بك في محادثة جديدة! 👋<br>كيف يمكنني مساعدتك الآن؟
               </div>
-              <img class="msg-icon" src="assets/logo.png" alt="المساعد الذكي">
+              <img class="msg-icon" src="../assets/images/logo.png" alt="المساعد الذكي">
             </div>
             <div class="msg-time">${getCurrentTimeString()}</div>
           </div>
@@ -246,16 +221,28 @@ function initMobileSidebarDrawer() {
   function openDrawer() {
     chatSidebar.classList.add('mobile-open');
     sidebarBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeDrawer() {
     chatSidebar.classList.remove('mobile-open');
     sidebarBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   sidebarToggle.addEventListener('click', openDrawer);
   sidebarBackdrop.addEventListener('click', closeDrawer);
   if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeDrawer);
+
+  // Auto-close drawer on item click on mobile screens
+  const drawerNavItems = chatSidebar.querySelectorAll('.side-link, .history-item');
+  drawerNavItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      if (window.innerWidth <= 991) {
+        closeDrawer();
+      }
+    });
+  });
 }
 
 /**
@@ -278,7 +265,7 @@ function getCurrentTimeString() {
  * HTML Escaper
  */
 function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
+  return str.replace(/[&<>'"]/g,
     tag => ({
       '&': '&amp;',
       '<': '&lt;',

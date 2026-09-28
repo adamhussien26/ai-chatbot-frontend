@@ -4,24 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>المساعد الذكي - جامعة العلوم والتقانة</title>
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/pages/welcome.css">
-  <!-- Dribbble Theme (Remove or comment this line to revert to original baseline) -->
-  <link rel="stylesheet" href="css/dribbble-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- JS Scripts -->
-  <script src="js/main.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/pages/welcome.js" defer></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- JS -->
+  <script src="../js/main.js" defer></script>
 </head>
 <body class="welcome-page">
 
@@ -33,25 +26,29 @@
         <div class="subtitle">جامعة العلوم والتقانة</div>
       </div>
       <div class="brand-logo">
-        <img src="assets/logo.png" alt="شعار الجامعة">
+        <img src="../assets/images/logo.png" alt="شعار الجامعة">
       </div>
     </div>
   </header>
 
   <!-- Hero Content Area -->
   <main>
-    <div class="hero-icon">
-      <img src="assets/logo.png" alt="شعار الجامعة">
+    <!-- Character (static) -->
+    <div class="hero-character" aria-hidden="true">
+      <div class="char-ground"></div>
+      <img class="character-img" src="../assets/images/adam.png" alt="مساعدك الذكي لخدمات الجامعة">
     </div>
 
-    <h1>مساعدك الذكي</h1>
-    <h2>في الحرم الجامعي</h2>
+    <h1>مرحبًا بك <span></span></h1>
+    <h2>أنا مساعدك الذكي لخدمات الجامعة</h2>
+
+    <p class="hero-question">كيف يمكنني مساعدتك اليوم؟</p>
 
     <p class="desc">
       اسأل عن جدولك، نتائجك، التسجيل، الرسوم، أو أي معلومة جامعية — وستجد الإجابة فورًا.
     </p>
 
-    <a href="03-login.html" class="login-btn" id="loginBtn">
+    <a href="login.html" class="login-btn" id="loginBtn">
       <span>تسجيل الدخول</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
@@ -59,14 +56,8 @@
         <line x1="15" y1="12" x2="3" y2="12"></line>
       </svg>
     </a>
-  </main>
 
-  <!-- Theme Toggle Floating Button -->
-  <div class="theme-toggle" id="themeToggle" role="button" aria-label="تبديل المظهر" tabindex="0">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    </svg>
-  </div>
+  </main>
 
 </body>
 </html>

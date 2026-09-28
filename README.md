@@ -1,84 +1,91 @@
-# المساعد الذكي - جامعة العلوم والتقانة (Clean Frontend Architecture)
+﻿# المساعد الذكي - جامعة العلوم والتقانة (Frontend)
 
-مشروع الواجهة الأمامية (Frontend) المنظم والمحدث وفق أعلى معايير البرمجة النظيفة (**Professional Clean Code Architecture**).
+واجهة أمامية بسيطة ومنظمة مبنية على **HTML + CSS + JavaScript فقط** (بدون أي Framework).
+
+المبدأ الأساسي: **"Write once, reuse everywhere"** — كل ما هو مشترك بين أكثر من شاشة موجود في ملف واحد مشترك.
 
 ---
 
 ## 📁 هيكلية المشروع (Directory Structure)
 
 ```text
-g:/Desktop/design/
+fronend/
 │
-├── 01-welcome.html          # صفحة الترحب الهبوطية
-├── 02-signup.html           # صفحة إنشاء حساب طالب جديد
-├── 03-login.html            # صفحة تسجيل الدخول
-├── 04-forgot-password.html  # صفحة استعادة كلمة المرور
-├── 05-reset-password.html   # صفحة إعادة تعيين كلمة المرور
-├── 06-chat.html             # صفحة المحادثة التفاعلية مع المساعد الذكي
-├── 07-settings.html         # صفحة الملف الشخصي وإعدادات الحساب
+├── pages/                     # جميع صفحات المشروع
+│   ├── welcome.html           # صفحة الترحب الهبوطية
+│   ├── signup.html            # صفحة إنشاء حساب طالب جديد
+│   ├── login.html             # صفحة تسجيل الدخول
+│   ├── forgot-password.html   # صفحة استعادة كلمة المرور
+│   ├── reset-password.html    # صفحة إعادة تعيين كلمة المرور
+│   ├── chat.html              # صفحة المحادثة مع المساعد الذكي
+│   └── settings.html          # صفحة الملف الشخصي
 │
-├── css/                     # ملفات التنسيق والنظام الجمالي
-│   ├── style.css            # CSS Variables, Resets, Base Typography, Utilities
-│   ├── components.css       # Reusable Components (Buttons, Cards, Inputs, Topbar)
-│   ├── responsive.css       # Media Queries الموحدة للتجاوب مع كافة الشاشات
-│   └── pages/               # التنسيقات الخاصة بكل صفحة فقط
-│       ├── welcome.css
-│       ├── signup.css
-│       ├── login.css
-│       ├── forgot-password.css
-│       ├── reset-password.css
-│       ├── chat.css
-│       └── settings.css
+├── css/
+│   └── style.css              # ملف CSS واحد مشترك لجميع الصفحات
 │
-├── js/                      # ملفات الجافاسكريبت والسلوك
-│   ├── main.js              # التهيئة العامة، إدارة RTL/LTR، والثيم الداكن
-│   ├── components.js        # وظائف المكونات التفاعلية (تبديل كلمة المرور، الـ Validation)
-│   └── pages/               # المنطق البرمجي الخاص بكل صفحة فقط
-│       ├── welcome.js
-│       ├── signup.js
-│       ├── login.js
-│       ├── forgot-password.js
-│       ├── reset-password.js
-│       ├── chat.js
-│       └── settings.js
+├── js/
+│   ├── main.js                # JavaScript مشترك (المظهر، الاتجاه، المكونات، النماذج)
+│   └── chat.js                # منطق خاص بصفحة المحادثة فقط
 │
-├── assets/                  # الصور والشعارات والوسائط
-│   └── logo.png
+├── assets/
+│   └── images/                # الصور والشعارات
 │
-└── README.md                # توثيق المشروع
+└── README.md                  # توثيق المشروع
 ```
 
 ---
 
-## 🎨 النظام الجمالي (Global Design System)
+## 🎨 نظام التصميم (css/style.css)
 
-تم بناء كافة ألوان وأبعاد المشروع باستخدام **CSS Custom Properties (`:root`)** في `css/style.css`:
+ملف واحد منظم بأقسام مرقّمة واضحة:
 
-```css
-:root {
-  --navy-900: #0f1b3d;
-  --gold-500: #c9a24a;
-  --teal-btn: #1c4d55;
-  --bg: #f4f5f8;
-  --panel: #ffffff;
-  --text-dark: #14203f;
-  --text-muted: #6b7280;
-  --border: #e6e8ee;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --shadow-sm: 0 4px 12px rgba(15, 27, 61, 0.06);
-}
+| القسم | المحتوى |
+|---|---|
+| 1. Design Tokens | الألوان، الخطوط، الظلال، الزوايا (CSS Variables) |
+| 2. Reset & Base | تصفير CSS، الخطوط الأساسية، RTL/LTR، شريط التمرير |
+| 3. Utilities | أدوات مساعدة (`.hidden`, `.hide`, `.show`) |
+| 4. Shared Keyframes | حركات مشتركة |
+| 5. Components | `.btn`, `.btn-primary`, `.btn-google`, `.field`, `.input-wrap`, `.toggle-pass`, `.error`, `.card`, `.card-header`, `.badge`, `.topbar`, `.strength`, `.rules` |
+| 6. Auth Layouts | عناصر مشتركة لصفحات المصادقة: `body.auth-page`, `.auth-split`, `.auth-card`, `.back-link`, `.divider`, `.success-box` |
+| 7-12. Page Sections | الأنماط الخاصة بكل صفحة في قسم واضح (Welcome, Signup, Login, Forgot/Reset, Chat, Settings) |
+| 13. Responsive | كل Media Queries موحدة في مكان واحد |
+| 14. Theme Layer | طبقة Glassmorphism النهائية |
+
+> **ملاحظة**: لا يوجد ملف CSS منفصل لأي شاشة — كل شيء في `style.css`.
+
+---
+
+## ⚡ نظام JavaScript
+
+| الملف | المحتوى |
+|---|---|
+| `js/main.js` | **مشترك لكل الصفحات**: اتجاه اللغة RTL/LTR، رسم Topbar تلقائياً، إظهار/إخفاء كلمة المرور، التحقق من النماذج (Login / Signup / Forgot / Reset)، صفحة الملف الشخصي |
+| `js/chat.js` | **خاص بصفحة المحادثة فقط**: محرك الرسائل، الردود الذكية، الاقتراحات، أرشيف المحادثات، قائمة الجوال |
+
+كل دالة في `main.js` محمية بفحص وجود عناصر الصفحة — لذا تحميل `main.js` في كل صفحة آمن ولا يسبب أخطاء.
+
+---
+
+## 🚀 التشغيل
+
+افتح `pages/welcome.html` مباشرة في المتصفح، أو استخدم إضافة Live Server في VS Code.
+
+---
+
+## 🧭 التنقل بين الصفحات
+
+```
+welcome → login → chat ⇄ settings
+login ⇄ signup
+login → forgot-password → reset-password → login
 ```
 
 ---
 
-## 🚀 المبادئ المطبقة (Clean Code Principles)
+## ✅ مبادئ مطبقة
 
-1. **Separation of Concerns (فصل المسؤوليات)**:
-   - **HTML**: مسؤول عن الـ Semantic Structure فقط. خالي تماماً من وسوم `<style>`, `<script>`, أو السمتين `style="..."` و `onclick="..."`.
-   - **CSS**: مسؤول عن التصميم والتجاوب، مقسم إلى Global Variables, Reusable Components, و Page-Specific CSS.
-   - **JS**: مسؤول عن السلوك والتفاعلات، مقسم إلى Main App Handler, Component Utils, و Page-Specific Logic.
-2. **DRY (Don't Repeat Yourself)**: إعادة استخدام أنماط الأزرار والنماذج والكروت ومبدلات اللغة والكلمة المرورية بدلاً من تكرارها.
-3. **Arabic RTL + English LTR Support**: دعم كامل ومتناسق للاتجاهين مع استخدام CSS Logical Properties.
-4. **Single Responsibility**: كل ملف وFunction يؤدي غرضاً واحداً واضحاً ومحدد المسؤولية.
-5. **Accessibility & SEO**: استخدام Semantic HTML5 tags (`<header>`, `<main>`, `<aside>`, `<nav>`, `<form>`, `<label>`) وسمات ARIA الأساسية.
+1. **DRY**: لا تكرار — Topbar وزر المظهر يُرسمون مرة واحدة في `main.js` لجميع الصفحات.
+2. **ملف CSS واحد** منظم بأقسام بدلاً من ملف لكل شاشة.
+3. **ملفا JS فقط**: مشترك + ملف خاص بالمحادثة (حاجة حقيقية فقط).
+4. **RTL/LTR**: دعم كامل للاتجاهين محفوظ في المتصفح (localStorage).
+5. **Semantic HTML + ARIA**: وسوم دلالية وسمات وصول أساسية.

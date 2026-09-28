@@ -8,35 +8,24 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/pages/login.css">
-  <!-- Dribbble Theme (Remove or comment this line to revert to original baseline) -->
-  <link rel="stylesheet" href="css/dribbble-theme.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
 
-  <!-- JS Scripts -->
-  <script src="js/main.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/pages/login.js" defer></script>
+  <!-- JS -->
+  <script src="../js/main.js" defer></script>
 </head>
-<body>
+<body class="auth-page">
 
-<div class="card">
+<div class="card auth-split">
 
   <!-- Left visual panel -->
   <section class="panel">
     <div class="logo">
-      <img src="assets/logo.png" alt="شعار الجامعة">
+      <img src="../assets/images/logo.png" alt="شعار الجامعة">
       <span>جامعة العلوم والتقانة</span>
     </div>
-
-    <svg class="bird" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M2 30 C 20 5, 35 25, 50 15 C 65 25, 80 5, 98 30 C 80 22, 65 35, 50 25 C 35 35, 20 22, 2 30 Z" fill="#f2f2f2" opacity="0.95"/>
-    </svg>
 
     <div class="panel-text">
       <div class="panel-heading">مساعدك الذكي<br>في الحرم<br>الجامعي</div>
@@ -76,7 +65,7 @@
           <input type="checkbox" id="remember">
           <span>تذكرني</span>
         </label>
-        <a href="04-forgot-password.html" class="forgot">نسيت كلمة المرور؟</a>
+        <a href="forgot-password.html" class="forgot">نسيت كلمة المرور؟</a>
       </div>
 
       <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
@@ -91,7 +80,7 @@
         <span>الدخول بحساب Google</span>
       </button>
 
-      <p class="signup-text">ليس لديك حساب؟ <a href="02-signup.html">سجّل الآن</a></p>
+      <p class="signup-text">ليس لديك حساب؟ <a href="signup.html">سجّل الآن</a></p>
     </form>
   </section>
 
