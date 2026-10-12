@@ -1521,45 +1521,104 @@ html[dir="ltr"] #submitBtn:hover .send-icon {
   transform: scaleX(1) translateX(4px);
 }
 
-/* زر "فتح رابط إعادة التعيين" */
-.open-reset-link {
+/* حقول إدخال رمز التحقق OTP (6 أرقام — اتجاه الأرقام LTR دائمًا) */
+.otp-group {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
-  margin: 20px 0 18px;
-  padding: 13px 20px;
-  min-height: 46px;
+  gap: 8px;
+  direction: ltr;
+  margin-bottom: 6px;
+}
+
+.otp-input {
+  flex: 1 1 40px;
+  min-width: 0;
+  max-width: 50px;
+  height: 56px;
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
-  background: var(--navy-900);
-  color: #ffffff;
-  font-size: var(--fs-base);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 22px;
   font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 10px 20px -12px rgba(15, 27, 61, 0.45);
-  transition: var(--transition-normal);
+  color: var(--text-dark);
+  text-align: center;
+  caret-color: var(--navy-900);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
 }
 
-.open-reset-link svg {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.25s ease;
+.otp-input:hover:not(:focus) {
+  border-color: #d2d7e0;
 }
 
-.open-reset-link:hover {
-  background: var(--navy-800);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px -10px rgba(15, 27, 61, 0.5);
-  color: #ffffff;
+.otp-input:focus {
+  border-color: var(--navy-900);
+  box-shadow: 0 0 0 3px rgba(15, 27, 61, 0.1);
 }
 
-.open-reset-link:hover svg {
-  transform: translateX(-3px);
+.otp-input.filled {
+  border-color: var(--gold-500);
+  background: rgba(58, 109, 181, 0.04);
 }
 
-html[dir="ltr"] .open-reset-link:hover svg {
-  transform: translateX(3px);
+.otp-group.has-error .otp-input {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(224, 90, 90, 0.12);
+}
+
+/* رسالة خطأ رمز التحقق (تُعرض عبر .show) */
+.otp-error {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.otp-error.show {
+  display: block;
+  animation: fadeInUp 0.2s ease;
+}
+/* بطاقة رمز التجربة (محاكاة البريد الإلكتروني) */
+.otp-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-muted);
+  border: 1px dashed var(--gold-400);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.otp-demo b {
+  color: var(--navy-900);
+  font-size: 15px;
+  letter-spacing: 3px;
+  direction: ltr;
+}
+
+#verifyOtpBtn {
+  margin-top: 18px;
+}
+
+@media (max-width: 575px) {
+  .otp-input {
+    max-width: 44px;
+    height: 52px;
+    font-size: 19px;
+  }
+}
+
+/* زر "تحقق من الرمز" */
+#verifyOtpBtn {
+  margin-bottom: 20px;
+}
+
+#verifyOtpBtn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* إعادة الإرسال مع العد التنازلي */

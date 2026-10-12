@@ -216,7 +216,7 @@ function initGoogleAuth(onClick) {
    ========================================================================== */
 
 /**
- * Login page: form validation + navigation.
+ * Login page: API login (مع fallback تجريبي) + validation + navigation.
  */
 function initLoginForm() {
   const form = document.getElementById('loginForm');
@@ -226,8 +226,9 @@ function initLoginForm() {
   const passField = document.getElementById('passField');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+  const submitBtn = form.querySelector('button.btn-primary');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     let valid = true;
 
@@ -245,7 +246,26 @@ function initLoginForm() {
       setFieldError(passField, false);
     }
 
-    if (valid) {
+    if (!valid) return;
+
+    // 1) محاولة الدخول عبر الـ Backend
+    try {
+      const data = await API.post('/auth/login', {
+        email: emailInput.value.trim(),
+        password: passwordInput.value,
+      }, { timeout: 6000 });
+      API.setSession(data.access_token, data.user);
+      window.location.href = 'chat.html';
+      return;
+    } catch (err) {
+      if (!API.isNetworkError(err)) {
+        // بيانات خاطئة أو حساب معطل → إظهار الخطأ في الحقل
+        setFieldError(passField, true);
+        const errorEl = passField.querySelector('.error');
+        if (errorEl) errorEl.textContent = err.message || 'بيانات الدخول غير صحيحة.';
+        return;
+      }
+      // 2) الخادم غير متاح → الوضع التجريبي (كما كان سابقًا)
       window.location.href = 'chat.html';
     }
   });
@@ -277,7 +297,7 @@ function initSignupForm() {
   const submitBtn = document.getElementById('submitBtn');
   const submitText = document.getElementById('submitText');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     let valid = true;
 
@@ -289,15 +309,35 @@ function initSignupForm() {
 
     if (!valid) return;
 
-    // Loading state simulation
+    // Loading state
     setButtonLoading(submitBtn, true);
     if (submitText) submitText.textContent = 'جارٍ إنشاء الحساب...';
 
-    setTimeout(() => {
+    // 1) محاولة إنشاء الحساب عبر الـ Backend
+    try {
+      await API.post('/auth/register', {
+        full_name: fullName.value.trim(),
+        email: email.value.trim(),
+        password: password.value,
+        university_id: uniId.value.trim(),
+      }, { timeout: 6000 });
       setButtonLoading(submitBtn, false);
       if (submitText) submitText.textContent = 'إنشاء الحساب';
       window.location.href = 'login.html';
-    }, 1000);
+      return;
+    } catch (err) {
+      setButtonLoading(submitBtn, false);
+      if (submitText) submitText.textContent = 'إنشاء الحساب';
+
+      if (!API.isNetworkError(err)) {
+        const errorEl = emailField.querySelector('.error');
+        if (errorEl) errorEl.textContent = err.message || 'تعذر إنشاء الحساب.';
+        setFieldError(emailField, true);
+        return;
+      }
+      // 2) الخادم غير متاح → الوضع التجريبي (كما كان سابقًا)
+      window.location.href = 'login.html';
+    }
   });
 
   initGoogleAuth(() => {
@@ -306,22 +346,55 @@ function initSignupForm() {
 }
 
 /**
- * Forgot password page: email validation + success view + resend cooldown.
+ * Forgot password page: email step → OTP verification step (6 digits) → New Password screen.
+ * Frontend-only: OTP simulation accepts any complete 6-digit code (integration point for the API).
  */
 function initForgotPasswordForm() {
   const form = document.getElementById('resetForm');
   const emailField = document.getElementById('emailField');
-  const sentEmail = document.getElementById('sentEmail');
   if (!form || !emailField) return;
 
   const emailInput = document.getElementById('email');
   const submitBtn = document.getElementById('submitBtn');
   const submitText = document.getElementById('submitText');
   const formBox = document.getElementById('formBox');
-  const successBox = document.getElementById('successBox');
+  const otpBox = document.getElementById('otpBox');
+  const sentEmail = document.getElementById('sentEmail');
   const resendBtn = document.getElementById('resendBtn');
+  const verifyBtn = document.getElementById('verifyOtpBtn');
+  const verifyText = document.getElementById('verifyOtpText');
+  const otpError = document.getElementById('otpError');
+  const otpGroup = document.getElementById('otpGroup');
+  const otpInputs = Array.from(document.querySelectorAll('.otp-input'));
 
-  form.addEventListener('submit', (e) => {
+  const OTP_LENGTH = 6;
+
+  function clearOtp() {
+    otpInputs.forEach((input) => {
+      input.value = '';
+      input.classList.remove('filled');
+    });
+    hideOtpError();
+  }
+
+  function hideOtpError() {
+    if (otpError) otpError.classList.remove('show');
+    if (otpGroup) otpGroup.classList.remove('has-error');
+  }
+
+  function showOtpError(message) {
+    if (!otpError) return;
+    otpError.textContent = message;
+    otpError.classList.add('show');
+    if (otpGroup) otpGroup.classList.add('has-error');
+  }
+
+  function getOtpCode() {
+    return otpInputs.map((input) => input.value).join('');
+  }
+
+  /* --- الخطوة 1: إرسال رمز التحقق إلى البريد (Backend → OTP) --- */
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const value = emailInput.value.trim();
 
@@ -334,26 +407,149 @@ function initForgotPasswordForm() {
     setButtonLoading(submitBtn, true);
     if (submitText) submitText.textContent = 'جارٍ الإرسال...';
 
+    let backendDone = false;
+    let devCode = null;
+
+    // 1) محاولة إرسال OTP عبر الـ Backend
+    try {
+      const data = await API.post('/auth/forgot-password', { email: value }, { timeout: 6000 });
+      backendDone = true;
+      devCode = data.dev_code || null;
+      if (devCode) console.info('[DEV] OTP code for', value, ':', devCode);
+    } catch (err) {
+      if (!API.isNetworkError(err)) {
+        setButtonLoading(submitBtn, false);
+        if (submitText) submitText.textContent = 'إرسال رمز التحقق';
+        setFieldError(emailField, true);
+        const errorEl = emailField.querySelector('.error');
+        if (errorEl) errorEl.textContent = err.message || 'تعذر إرسال الرمز.';
+        return;
+      }
+    }
+
     setTimeout(() => {
       setButtonLoading(submitBtn, false);
-      if (submitText) submitText.textContent = 'إرسال رابط إعادة التعيين';
+      if (submitText) submitText.textContent = 'إرسال رمز التحقق';
       if (sentEmail) sentEmail.textContent = value;
+      clearOtp();
       if (formBox) formBox.classList.add('hide');
-      if (successBox) successBox.classList.add('show');
+      if (otpBox) otpBox.classList.add('show');
+      if (backendDone) {
+        try {
+          sessionStorage.setItem('ust_reset_email', value);
+          if (devCode) alert('وضع التطوير: رمز التحقق الخاص بك هو ' + devCode);
+        } catch (err) { /* noop */ }
+      }
       startResendCooldown(resendBtn);
-    }, 900);
+      if (otpInputs[0]) otpInputs[0].focus();
+    }, backendDone ? 150 : 900);
   });
 
+  /* --- إعادة إرسال الرمز مع العد التنازلي --- */
   if (resendBtn) {
     resendBtn.addEventListener('click', () => {
       if (resendBtn.disabled) return;
+      clearOtp();
       startResendCooldown(resendBtn);
+      if (otpInputs[0]) otpInputs[0].focus();
+    });
+  }
+
+  /* --- سلوك حقول OTP: أرقام فقط + تنقّل تلقائي + Backspace + لصق + أسهم --- */
+  otpInputs.forEach((input, index) => {
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/g, '').slice(0, 1);
+      input.classList.toggle('filled', input.value !== '');
+      hideOtpError();
+
+      if (input.value && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && index > 0) {
+        const prev = otpInputs[index - 1];
+        prev.value = '';
+        prev.classList.remove('filled');
+        prev.focus();
+      } else if (e.key === 'ArrowLeft' && index > 0) {
+        otpInputs[index - 1].focus();
+      } else if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      } else if (e.key === 'Enter' && verifyBtn) {
+        verifyBtn.click();
+      }
+    });
+
+    input.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const digits = text.replace(/\D/g, '').slice(0, OTP_LENGTH);
+      if (!digits) return;
+
+      digits.split('').forEach((digit, i) => {
+        if (otpInputs[i]) {
+          otpInputs[i].value = digit;
+          otpInputs[i].classList.add('filled');
+        }
+      });
+      hideOtpError();
+
+      const nextEmpty = otpInputs.findIndex((field) => field.value === '');
+      const target = nextEmpty === -1 ? otpInputs[otpInputs.length - 1] : otpInputs[nextEmpty];
+      if (target) target.focus();
+    });
+  });
+
+  /* --- الخطوة 2: التحقق من الرمز والانتقال لشاشة كلمة المرور الجديدة --- */
+  if (verifyBtn) {
+    verifyBtn.addEventListener('click', async () => {
+      const code = getOtpCode();
+
+      if (code.length < OTP_LENGTH) {
+        showOtpError('من فضلك أدخل الرمز المكوّن من 6 أرقام.');
+        const firstEmpty = otpInputs.find((input) => input.value === '');
+        if (firstEmpty) firstEmpty.focus();
+        return;
+      }
+      hideOtpError();
+
+      setButtonLoading(verifyBtn, true);
+      if (verifyText) verifyText.textContent = 'جارٍ التحقق...';
+
+      // 1) محاولة التحقق عبر الـ Backend
+      let backendVerified = false;
+      try {
+        const resetEmail = sessionStorage.getItem('ust_reset_email') || (sentEmail ? sentEmail.textContent : '');
+        await API.post('/auth/verify-otp', { email: resetEmail, code }, { timeout: 6000 });
+        backendVerified = true;
+        sessionStorage.setItem('ust_reset_code', code);
+      } catch (err) {
+        if (!API.isNetworkError(err)) {
+          setButtonLoading(verifyBtn, false);
+          if (verifyText) verifyText.textContent = 'تحقق من الرمز';
+          showOtpError(err.message || 'رمز التحقق غير صحيح أو منتهي الصلاحية.');
+          return;
+        }
+      }
+
+      setTimeout(() => {
+        setButtonLoading(verifyBtn, false);
+        if (verifyText) verifyText.textContent = 'تحقق من الرمز';
+
+        try {
+          sessionStorage.setItem('otp_verified', '1');
+        } catch (err) { /* noop */ }
+
+        window.location.href = 'reset-password.html';
+      }, backendVerified ? 150 : 900);
     });
   }
 }
 
 /**
- * Starts a 30-second cooldown timer for resending password reset link.
+ * Starts a 30-second cooldown timer for resending the OTP code.
  * @param {HTMLButtonElement} resendBtn
  */
 function startResendCooldown(resendBtn) {
@@ -361,19 +557,21 @@ function startResendCooldown(resendBtn) {
 
   let seconds = 30;
   resendBtn.disabled = true;
-  resendBtn.textContent = `إعادة الإرسال (${seconds})`;
+  resendBtn.textContent = `إعادة إرسال الرمز (${seconds})`;
 
   const interval = setInterval(() => {
     seconds--;
     if (seconds <= 0) {
       clearInterval(interval);
       resendBtn.disabled = false;
-      resendBtn.textContent = 'إعادة الإرسال';
+      resendBtn.textContent = 'إعادة إرسال الرمز';
     } else {
-      resendBtn.textContent = `إعادة الإرسال (${seconds})`;
+      resendBtn.textContent = `إعادة إرسال الرمز (${seconds})`;
     }
   }, 1000);
 }
+
+
 
 /**
  * Reset password page: strength meter, rules checklist and submit.
@@ -382,6 +580,17 @@ function initResetPasswordForm() {
   const form = document.getElementById('resetForm');
   const strengthLabel = document.getElementById('strengthLabel');
   if (!form || !strengthLabel) return;
+
+  // Guard: شاشة كلمة المرور الجديدة متاحة فقط بعد التحقق من رمز OTP
+  let otpVerified = false;
+  try {
+    otpVerified = sessionStorage.getItem('otp_verified') === '1';
+  } catch (err) { /* noop */ }
+
+  if (!otpVerified) {
+    window.location.replace('forgot-password.html');
+    return;
+  }
 
   const passwordInput = document.getElementById('password');
   const confirmInput = document.getElementById('confirm');
@@ -454,7 +663,7 @@ function initResetPasswordForm() {
     validateForm();
   });
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const { allMet, matches } = validateForm();
     if (!matches) {
@@ -466,9 +675,43 @@ function initResetPasswordForm() {
     setButtonLoading(submitBtn, true);
     if (submitText) submitText.textContent = 'جارٍ الحفظ...';
 
+    // 1) محاولة إعادة التعيين عبر الـ Backend (يستهلك رمز OTP فعليًا)
+    try {
+      const resetEmail = sessionStorage.getItem('ust_reset_email') || '';
+      const resetCode = sessionStorage.getItem('ust_reset_code') || '';
+      if (resetEmail && resetCode) {
+        await API.post('/auth/reset-password', {
+          email: resetEmail,
+          code: resetCode,
+          new_password: passwordInput.value,
+        }, { timeout: 6000 });
+        try { sessionStorage.removeItem('otp_verified'); } catch (err) { /* noop */ }
+        setButtonLoading(submitBtn, false);
+        if (submitText) submitText.textContent = 'حفظ كلمة المرور';
+        if (formBox) formBox.classList.add('hide');
+        if (successBox) successBox.classList.add('show');
+        return;
+      }
+    } catch (err) {
+      if (!API.isNetworkError(err)) {
+        setButtonLoading(submitBtn, false);
+        if (submitText) submitText.textContent = 'حفظ كلمة المرور';
+        setFieldError(confirmField, true);
+        const errorEl = confirmField.querySelector('.error');
+        if (errorEl) errorEl.textContent = err.message || 'تعذر إعادة التعيين. أعد المحاولة.';
+        return;
+      }
+    }
+
+    // 2) الخادم غير متاح → الوضع التجريبي (كما كان سابقًا)
     setTimeout(() => {
       setButtonLoading(submitBtn, false);
       if (submitText) submitText.textContent = 'حفظ كلمة المرور';
+
+      try {
+        sessionStorage.removeItem('otp_verified');
+      } catch (err) { /* noop */ }
+
       if (formBox) formBox.classList.add('hide');
       if (successBox) successBox.classList.add('show');
     }, 900);
@@ -482,7 +725,7 @@ function initResetPasswordForm() {
 }
 
 /**
- * Settings page: profile photo simulation + password change form.
+ * Settings page: profile (من الـ Backend) + تغيير كلمة المرور + photo simulation.
  */
 function initSettingsPage() {
   const profilePhoto = document.querySelector('.profile-photo');
@@ -492,40 +735,92 @@ function initSettingsPage() {
 
   if (!profilePhoto && !changePasswordBtn) return;
 
+  // تحميل بيانات الملف الشخصي من الـ Backend (بدون تغيير التصميم)
+  (async () => {
+    try {
+      if (!API.getToken()) return;
+      const profile = await API.get('/students/me', { timeout: 5000 });
+      const nameEl = document.querySelector('.profile-meta .name');
+      if (nameEl && profile.full_name) nameEl.textContent = profile.full_name;
+      const idEl = document.querySelector('.sub-row span:first-child');
+      if (idEl && profile.university_id) idEl.firstChild.textContent = profile.university_id + ' ';
+      const emailEl = document.querySelector('.sub-row span:last-child');
+      if (emailEl && profile.email) emailEl.firstChild.textContent = profile.email + ' ';
+      if (profilePhoto && profile.avatar_url) profilePhoto.src = profile.avatar_url;
+    } catch (err) {
+      // الخادم غير متاح أو الجلسة منتهية — تبقى البيانات التجريبية كما هي
+    }
+  })();
+
   if (photoEditBtn) {
-    photoEditBtn.addEventListener('click', () => {
+    photoEditBtn.addEventListener('click', async () => {
       const newUrl = prompt('أدخل رابط الصورة الجديدة:', profilePhoto ? profilePhoto.src : '');
       if (newUrl && newUrl.trim() !== '') {
         if (profilePhoto) profilePhoto.src = newUrl.trim();
+        try {
+          if (API.getToken()) await API.put('/students/me', { avatar_url: newUrl.trim() }, { timeout: 5000 });
+        } catch (err) { /* الوضع التجريبي */ }
       }
     });
   }
 
   if (removePhotoBtn) {
-    removePhotoBtn.addEventListener('click', () => {
+    removePhotoBtn.addEventListener('click', async () => {
       if (confirm('هل أنت متاكد من رغبتك في إزالة الصورة الشخصية؟')) {
-        if (profilePhoto) profilePhoto.src = 'https://picsum.photos/seed/defaultuser/200/200';
+        const defaultPhoto = 'https://picsum.photos/seed/defaultuser/200/200';
+        if (profilePhoto) profilePhoto.src = defaultPhoto;
+        try {
+          if (API.getToken()) await API.put('/students/me', { avatar_url: defaultPhoto }, { timeout: 5000 });
+        } catch (err) { /* الوضع التجريبي */ }
       }
     });
   }
 
   if (changePasswordBtn) {
-    changePasswordBtn.addEventListener('click', (e) => {
+    changePasswordBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const inputs = document.querySelectorAll('.field-grid input');
-      let valid = true;
+      const currentInput = document.getElementById('currentPassword');
+      const newInput = document.getElementById('newPassword');
+      const confirmInput = document.getElementById('confirmNewPassword');
 
-      inputs.forEach((input) => {
-        if (input.value.trim() === '') valid = false;
-      });
-
-      if (!valid) {
+      if (!currentInput || !newInput || !confirmInput) return;
+      if (!currentInput.value || !newInput.value || !confirmInput.value) {
         alert('يرجى ملء جميع الحقول الخاصة بكلمة المرور.');
         return;
       }
+      if (newInput.value !== confirmInput.value) {
+        alert('كلمتا المرور غير متطابقتين.');
+        return;
+      }
 
+      // 1) تغيير كلمة المرور عبر الـ Backend
+      try {
+        if (API.getToken()) {
+          await API.post('/auth/change-password', {
+            current_password: currentInput.value,
+            new_password: newInput.value,
+          }, { timeout: 6000 });
+          alert('تم تغيير كلمة المرور بنجاح!');
+          [currentInput, newInput, confirmInput].forEach((input) => input.value = '');
+          return;
+        }
+      } catch (err) {
+        if (!API.isNetworkError(err)) {
+          alert(err.message || 'تعذر تغيير كلمة المرور.');
+          return;
+        }
+      }
+
+      // 2) الوضع التجريبي (كما كان سابقًا)
       alert('تم تغيير كلمة المرور بنجاح!');
-      inputs.forEach((input) => input.value = '');
+      [currentInput, newInput, confirmInput].forEach((input) => input.value = '');
     });
   }
+
+  // تسجيل الخروج: مسح الجلسة عند الضغط على أي رابط خروج
+  document.querySelectorAll('a.side-link.logout, a[href="welcome.html"].logout').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (typeof API !== 'undefined') API.clearSession();
+    });
+  });
 }

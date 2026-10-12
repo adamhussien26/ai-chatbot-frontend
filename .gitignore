@@ -1,4 +1,6 @@
-﻿# Office installer accidentally placed in css/ (kept on disk, not for GitHub)
+# Office installer (kept on disk, never for GitHub)
 css/Microsoft Office Professional Plus 2010 English/
+__pycache__/
+*.pyc
 Thumbs.db
 desktop.ini
